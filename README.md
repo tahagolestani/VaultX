@@ -2,29 +2,29 @@
 
 A modern client-side password manager UI focused on security concepts, usability, and clean frontend architecture.
 
-VaultX is a **portfolio and educational project** built to demonstrate how a password manager interface can be designed with features such as password generation, password strength analysis, search, categories, clipboard actions, auto-lock, and client-side encryption concepts.
+VaultX is an educational and portfolio project designed to demonstrate how a password manager interface can be built with modern frontend technologies.
 
 > ⚠️ **Security Notice**
 >
-> VaultX is an educational/portfolio project. It is **not intended for storing real-world sensitive passwords or as a production password manager**. The client-side encryption implementation is included to demonstrate security concepts and should not be considered a replacement for a professionally audited password-management system.
+> VaultX is an educational/portfolio project and is **not intended for storing real-world sensitive passwords**. Its client-side encryption features are implemented to demonstrate security concepts and should not be considered a professionally audited password-management solution.
 
 ---
 
 ## ✨ Features
 
-- 🔐 Password vault interface
+- 🔐 Password vault
 - 🎲 Password generator
 - 📊 Password strength meter
 - 🔎 Search saved passwords
 - 🗂️ Password categories
-- 📋 Copy password to clipboard
-- 🔄 Change password functionality
-- 🔒 Auto-lock functionality
-- 👤 Login screen
+- 📋 Copy to clipboard
+- 🔄 Change password
+- 🔒 Auto-lock
+- 👤 Login system
 - 🛡️ Client-side encryption concept
-- 💾 Local data storage
-- 📱 Responsive interface
-- 🌙 Dark security-focused UI
+- 💾 Local storage
+- 📱 Responsive design
+- 🌙 Dark security-focused interface
 
 ---
 
@@ -37,7 +37,7 @@ VaultX is a **portfolio and educational project** built to demonstrate how a pas
 - **LocalStorage**
 - **Git & GitHub**
 
-No frontend framework is required for the current version.
+VaultX currently does not require a frontend framework or backend server.
 
 ---
 
@@ -63,6 +63,7 @@ VaultX/
 │   └── login.html
 │
 ├── index.html
+├── .gitignore
 └── README.md
 ```
 
@@ -70,22 +71,21 @@ VaultX/
 
 ## 🔐 Security Concept
 
-VaultX is designed around the idea of keeping sensitive operations on the client side.
-
-The project explores concepts such as:
+VaultX explores several browser-side security concepts:
 
 - Client-side encryption
 - Password generation
-- Password strength evaluation
+- Password strength analysis
 - Local data persistence
 - Automatic locking
-- Clipboard security considerations
+- Clipboard handling
+- Separation of authentication and vault logic
 
-The project intentionally does not use a backend database or server-side password storage.
+The project intentionally does not use a backend database for storing passwords.
 
 ### Important
 
-Client-side encryption in this project is implemented for **educational purposes** and has not been independently audited.
+The security implementation is intended for **learning and demonstration purposes**. It has not been independently security-audited and should not be used to protect real-world credentials.
 
 ---
 
@@ -97,15 +97,15 @@ Clone the repository:
 git clone https://github.com/tahagolestani/VaultX.git
 ```
 
-Open the project folder:
+Move into the project directory:
 
 ```bash
 cd VaultX
 ```
 
-Then open `index.html` in your browser.
+You can then open `index.html` directly in your browser.
 
-For the best development experience, use a local development server such as the **VS Code Live Server extension**.
+For development, using a local server such as **VS Code Live Server** is recommended.
 
 ---
 
@@ -113,19 +113,20 @@ For the best development experience, use a local development server such as the 
 
 VaultX was created to practice and demonstrate:
 
-- Building a multi-page frontend application
-- JavaScript application architecture
+- Multi-page frontend architecture
+- JavaScript application logic
 - Browser storage
-- Web security concepts
+- Web Crypto API concepts
 - Password generation
-- Encryption concepts
+- Password strength evaluation
 - Responsive UI development
+- Security-focused UX
 - Git and GitHub workflow
-- Building a portfolio-ready frontend project
+- Portfolio-oriented frontend development
 
 ---
 
-## 📌 Current Status
+## 📌 Project Status
 
 VaultX is currently under active development.
 
@@ -138,25 +139,25 @@ VaultX is currently under active development.
 - [x] Password categories
 - [x] Search
 - [x] Copy to clipboard
-- [x] Client-side encryption concept
 - [x] Local storage
+- [x] Client-side encryption concept
 - [x] GitHub repository
 
 ### In Progress
 
-- [ ] Improve vault interactions
-- [ ] Refine password management actions
+- [ ] Improve password management actions
+- [ ] Refine vault interactions
 - [ ] Improve security UX
-- [ ] UI/UX refinements
 - [ ] Accessibility improvements
 - [ ] Performance optimization
 - [ ] Additional documentation
+- [ ] Live demo
 
 ---
 
 ## 🌐 Live Demo
 
-Coming soon.
+**Coming soon.**
 
 ---
 
@@ -164,7 +165,7 @@ Coming soon.
 
 **Taha Golestani**
 
-Frontend Developer focused on building modern, interactive, and performance-conscious web applications.
+Frontend Developer focused on building modern and interactive web applications.
 
 GitHub: [@tahagolestani](https://github.com/tahagolestani)
 
@@ -172,4 +173,4 @@ GitHub: [@tahagolestani](https://github.com/tahagolestani)
 
 ## 📄 License
 
-This project is currently intended as a portfolio and educational project.
+This project is currently intended as an educational and portfolio project.
