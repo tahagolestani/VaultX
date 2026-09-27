@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="VaultX secure password manager dashboard.">
+
+    <title>Dashboard — VaultX</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" defer></script>
+</head>
+
+<body>
+
+    <!-- =========================================
+       SIDEBAR
+  ========================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <a href="dashboard.html" class="sidebar-brand">
+                <span class="brand-mark">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </span>
+
+                <span class="brand-text">VaultX</span>
+            </a>
+
+            <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    Workspace
+                </span>
+
+                <a href="#dashboard" class="nav-item active">
+                    <span class="nav-item-icon">
+                        <i class="fa-solid fa-grid-2"></i>
+                    </span>
+
+                    <span class="nav-item-text">
+                        Dashboard
+                    </span>
+                </a>
+
+                <a href="#vault" class="nav-item">
+                    <span class="nav-item-icon">
+                        <i class="fa-solid fa-vault"></i>
+                    </span>
+
+                    <span class="nav-item-text">
+                        All Items
+                    </span>
+
+                    <span class="nav-item-count" id="navItemCount">
+                        0
+                    </span>
+                </a>
+
+                <a href="#favorites" class="nav-item" id="favoritesLink">
+                    <span class="nav-item-icon">
+                        <i class="fa-regular fa-star"></i>
+                    </span>
+
+                    <span class="nav-item-text">
+                        Favorites
+                    </span>
+
+                    <span class="nav-item-count" id="navFavoriteCount">
+                        0
+                    </span>
+                </a>
+
+            </div>
+
+
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    Categories
+                </span>
+
+                <button type="button" class="nav-item" data-category-filter="login">
+                    <span class="nav-item-icon">
+                        <i class="fa-solid fa-key"></i>
+                    </span>
+
+                    <span class="nav-item-text">
+                        Logins
+                    </span>
+
+                    <span class="nav-item-count" id="loginCount">
+                        0
+                    </span>
+                </button>
+
+
+                <button type="button" class="nav-item" data-category-filter="card">
+                    <span class="nav-item-icon">
+                        <i class="fa-regular fa-credit-card"></i>
+                    </span>
+
+                    <span class="nav-item-text">
+                        Cards
+                    </span>
+
+                    <span class="nav-item-count" id="cardCount">
+                        0
+                    </span>
+                </button>
+
+
+                <button type="button" class="nav-item" data-category-filter="secure-note">
+                    <span class="nav-item-icon">
+                        <i class="fa-regular fa-note-sticky"></i>
+                    </span>
+
+                    <span class="nav-item-text">
+                        Secure Notes
+                    </span>
+
+                    <span class="nav-item-count" id="secureNoteCount">
+                        0
+                    </span>
+                </button>
+
+            </div>
+
+
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    Tools
+                </span>
+
+                <a href="#password-security" class="nav-item">
+                    <span class="nav-item-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </span>
+
+                    <span class="nav-item-text">
+                        Password Security
+                    </span>
+                </a>
+
+                <a href="#settings" class="nav-item">
+                    <span class="nav-item-icon">
+                        <i class="fa-solid fa-sliders"></i>
+                    </span>
+
+                    <span class="nav-item-text">
+                        Settings
+                    </span>
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button type="button" class="logout-item" id="logoutButton">
+                <span class="nav-item-icon">
+                    <i class="fa-solid fa-lock"></i>
+                </span>
+
+                <span class="nav-item-text">
+                    Lock Vault
+                </span>
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+    <!-- =========================================
+       MAIN
+  ========================================== -->
+
+    <main class="main-content" id="dashboard">
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header">
+
+            <div class="header-left">
+
+                <button type="button" class="mobile-menu-button" id="mobileMenuButton" aria-label="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+
+                <div class="search-wrapper">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="search" id="vaultSearch" placeholder="Search your vault..." autocomplete="off">
+
+                    <span class="search-shortcut">
+                        /
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <button type="button" class="header-icon-button" title="Notifications" aria-label="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                </button>
+
+
+                <button type="button" class="profile-button">
+                    <span class="profile-avatar">
+                        T
+                    </span>
+
+                    <span class="profile-name">
+                        Taha
+                    </span>
+
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <div class="dashboard-content">
+
+            <!-- WELCOME -->
+
+            <section class="welcome-section">
+
+                <div>
+                    <span class="eyebrow">
+                        Secure workspace
+                    </span>
+
+                    <h1>
+                        Welcome back, Taha
+                    </h1>
+
+                    <p>
+                        Manage your passwords and keep your digital life secure.
+                    </p>
+                </div>
+
+
+                <button type="button" class="vx-btn vx-btn-primary" id="addPasswordButton">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Password
+                </button>
+
+            </section>
+
+
+            <!-- SECURITY OVERVIEW -->
+
+            <section class="security-overview">
+
+                <div class="security-overview-content">
+
+                    <div class="security-overview-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+
+                    <div class="security-overview-text">
+
+                        <span class="eyebrow">
+                            Vault Security
+                        </span>
+
+                        <h2>
+                            Your vault is protected
+                        </h2>
+
+                        <p>
+                            Keep your passwords strong and up to date.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="security-score">
+
+                    <div class="security-score-ring">
+                        <span id="securityScore">
+                            100%
+                        </span>
+                    </div>
+
+                    <div>
+                        <span class="security-score-label">
+                            Security Score
+                        </span>
+
+                        <strong id="securityScoreText">
+                            100 / 100
+                        </strong>
+
+                        <div class="security-progress">
+                            <span id="securityProgress" style="width: 100%"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <button type="button" class="score-action" id="improveSecurityButton">
+                    Improve
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </section>
+
+
+            <!-- STATS -->
+
+            <section class="stats-grid">
+
+                <article class="stat-card">
+
+                    <div class="stat-card-icon purple">
+                        <i class="fa-solid fa-vault"></i>
+                    </div>
+
+                    <div>
+                        <span>Total Items</span>
+                        <strong id="totalItems">0</strong>
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-card-icon yellow">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+                    <div>
+                        <span>Favorites</span>
+                        <strong id="totalFavorites">0</strong>
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-card-icon red">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+
+                    <div>
+                        <span>Weak Passwords</span>
+                        <strong id="weakPasswords">0</strong>
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-card-icon green">
+                        <i class="fa-solid fa-shield-check"></i>
+                    </div>
+
+                    <div>
+                        <span>Protected Items</span>
+                        <strong id="protectedItems">0</strong>
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- VAULT -->
+
+            <section class="dashboard-section" id="vault">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            Your vault
+                        </span>
+
+                        <h2>
+                            Passwords & Items
+                        </h2>
+                    </div>
+
+
+                    <div class="section-actions">
+
+                        <button type="button" class="vx-btn vx-btn-secondary" id="vaultFilterButton">
+                            <i class="fa-solid fa-filter"></i>
+                            Filter
+                        </button>
+
+                        <button type="button" class="vx-btn vx-btn-primary" id="vaultAddButton">
+                            <i class="fa-solid fa-plus"></i>
+                            Add
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FILTER BAR -->
+
+                <div class="vault-filter-bar" id="vaultFilterBar" hidden>
+
+                    <button type="button" class="filter-chip active" data-filter="all">
+                        All
+                    </button>
+
+                    <button type="button" class="filter-chip" data-filter="login">
+                        Logins
+                    </button>
+
+                    <button type="button" class="filter-chip" data-filter="card">
+                        Cards
+                    </button>
+
+                    <button type="button" class="filter-chip" data-filter="secure-note">
+                        Secure Notes
+                    </button>
+
+                    <button type="button" class="filter-chip" data-filter="favorite">
+                        <i class="fa-regular fa-star"></i>
+                        Favorites
+                    </button>
+
+                </div>
+
+
+                <!-- PASSWORD GRID -->
+
+                <div class="password-grid" id="passwordGrid"></div>
+
+
+                <!-- EMPTY STATE -->
+
+                <div class="empty-search" id="emptySearch" hidden></div>
+
+            </section>
+
+
+            <!-- PASSWORD SECURITY -->
+
+            <section class="dashboard-section password-security-section" id="password-security">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            Security tool
+                        </span>
+
+                        <h2>
+                            Password Security Center
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="security-center">
+
+                    <div class="security-checker">
+
+                        <div class="security-checker-header">
+
+                            <div class="security-checker-icon">
+                                <i class="fa-solid fa-key"></i>
+                            </div>
+
+                            <div>
+                                <h3>
+                                    Check Password Strength
+                                </h3>
+
+                                <p>
+                                    Test the strength of any password before using it.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="security-password-wrapper">
+
+                            <input type="password" id="securityPassword" class="security-password-input"
+                                placeholder="Enter a password..." autocomplete="off">
+
+                            <div class="security-input-actions">
+
+                                <button type="button" class="security-action-button" id="toggleSecurityPassword"
+                                    aria-label="Show password" title="Show password">
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+
+                                <button type="button" class="security-action-button" id="copySecurityPassword"
+                                    aria-label="Copy password" title="Copy password">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="security-strength">
+
+                            <div class="security-strength-header">
+
+                                <span>
+                                    Strength
+                                </span>
+
+                                <strong id="securityStrengthText">
+                                    —
+                                </strong>
+
+                            </div>
+
+                            <div class="security-strength-track">
+
+                                <span id="securityStrengthProgress" style="width: 0%"></span>
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="security-result" id="securityResult">
+                            Enter a password to check its strength.
+                        </p>
+
+                    </div>
+
+
+                    <div class="security-requirements">
+
+                        <div class="security-requirements-header">
+                            <h3>
+                                Requirements
+                            </h3>
+
+                            <span>
+                                Recommended
+                            </span>
+                        </div>
+
+
+                        <div class="security-requirement invalid" id="securityRequirementLength">
+                            <span class="security-requirement-icon">
+                                <i class="fa-solid fa-xmark"></i>
+                            </span>
+
+                            <span>
+                                At least 12 characters
+                            </span>
+                        </div>
+
+
+                        <div class="security-requirement invalid" id="securityRequirementUppercase">
+                            <span class="security-requirement-icon">
+                                <i class="fa-solid fa-xmark"></i>
+                            </span>
+
+                            <span>
+                                One uppercase letter
+                            </span>
+                        </div>
+
+
+                        <div class="security-requirement invalid" id="securityRequirementLowercase">
+                            <span class="security-requirement-icon">
+                                <i class="fa-solid fa-xmark"></i>
+                            </span>
+
+                            <span>
+                                One lowercase letter
+                            </span>
+                        </div>
+
+
+                        <div class="security-requirement invalid" id="securityRequirementNumber">
+                            <span class="security-requirement-icon">
+                                <i class="fa-solid fa-xmark"></i>
+                            </span>
+
+                            <span>
+                                One number
+                            </span>
+                        </div>
+
+
+                        <div class="security-requirement invalid" id="securityRequirementSymbol">
+                            <span class="security-requirement-icon">
+                                <i class="fa-solid fa-xmark"></i>
+                            </span>
+
+                            <span>
+                                One special character
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SETTINGS -->
+
+            <section class="dashboard-section settings-section" id="settings">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            Preferences
+                        </span>
+
+                        <h2>
+                            Settings
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-placeholder">
+
+                    <div>
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+
+                    <h3>
+                        Settings are coming soon
+                    </h3>
+
+                    <p>
+                        More VaultX preferences will be available here.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================
+       ADD / EDIT PASSWORD MODAL
+  ========================================== -->
+
+    <div class="password-modal" id="passwordModal" aria-hidden="true" hidden>
+
+        <div class="password-modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="eyebrow">
+                        Vault item
+                    </span>
+
+                    <h2 id="passwordModalTitle">
+                        Add Password
+                    </h2>
+
+                    <p id="passwordModalDescription">
+                        Save a new login securely in your vault.
+                    </p>
+
+                </div>
+
+
+                <button type="button" class="modal-close" id="closePasswordModal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <form id="passwordForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="passwordService">
+                            Service
+                        </label>
+
+                        <input type="text" id="passwordService" placeholder="e.g. GitHub" autocomplete="organization"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="passwordUsername">
+                            Username / Email
+                        </label>
+
+                        <input type="text" id="passwordUsername" placeholder="name@example.com" autocomplete="username"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group form-group-full">
+
+                        <label for="passwordValue">
+                            Password
+                        </label>
+
+                        <div class="form-input-with-action">
+
+                            <input type="password" id="passwordValue" placeholder="Enter password"
+                                autocomplete="new-password" required>
+
+                            <button type="button" id="togglePasswordValue" aria-label="Show password"
+                                title="Show password">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="passwordUrl">
+                            Website URL
+                        </label>
+
+                        <input type="url" id="passwordUrl" placeholder="https://example.com" autocomplete="url">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="passwordCategory">
+                            Category
+                        </label>
+
+                        <select id="passwordCategory">
+
+                            <option value="login">
+                                Login
+                            </option>
+
+                            <option value="card">
+                                Card
+                            </option>
+
+                            <option value="secure-note">
+                                Secure Note
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group form-group-full">
+
+                        <label for="passwordNotes">
+                            Notes
+                        </label>
+
+                        <textarea id="passwordNotes" rows="4" placeholder="Optional notes..."></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button type="button" class="vx-btn vx-btn-secondary" id="cancelPasswordButton">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="vx-btn vx-btn-primary" id="savePasswordButton">
+                        <i class="fa-solid fa-check"></i>
+                        <span id="savePasswordButtonText">
+                            Save Password
+                        </span>
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/vault.js"></script>
+
+</body>
+
+</html>

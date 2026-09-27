@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Login to your VaultX secure password vault.">
+
+    <title>Login — VaultX</title>
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <!-- Background -->
+        <div class="login-background">
+            <div class="background-glow background-glow-one"></div>
+            <div class="background-glow background-glow-two"></div>
+        </div>
+
+
+        <!-- Login Container -->
+        <section class="login-container">
+
+            <!-- Brand -->
+            <div class="login-brand">
+
+                <div class="brand-icon">
+                    <span>V</span>
+                </div>
+
+                <span class="brand-name">
+                    VaultX
+                </span>
+
+            </div>
+
+
+            <!-- Heading -->
+            <div class="login-heading">
+
+                <h1>
+                    Welcome back
+                </h1>
+
+                <p>
+                    Enter your master password to unlock your vault.
+                </p>
+
+            </div>
+
+
+            <!-- Login Card -->
+            <div class="login-card">
+
+                <form id="loginForm">
+
+                    <!-- Master Password -->
+                    <div class="form-group">
+
+                        <label for="masterPassword" class="vx-label">
+                            Master Password
+                        </label>
+
+                        <div class="password-input-wrapper">
+
+                            <input type="password" id="masterPassword" class="vx-input"
+                                placeholder="Enter your master password" autocomplete="current-password" required>
+
+                            <button type="button" class="password-toggle" id="passwordToggle"
+                                aria-label="Show password">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Remember -->
+                    <div class="login-options">
+
+                        <label class="remember-option">
+
+                            <input type="checkbox" id="rememberMe">
+
+                            <span class="custom-checkbox"></span>
+
+                            <span>
+                                Remember me
+                            </span>
+
+                        </label>
+
+                        <button type="button" class="forgot-button" id="forgotButton">
+                            Forgot password?
+                        </button>
+
+                    </div>
+
+
+                    <!-- Submit -->
+                    <button type="submit" class="vx-btn vx-btn-primary login-button">
+                        <span>Unlock Vault</span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+
+                <!-- Security Notice -->
+                <div class="security-notice">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    <div>
+                        <strong>Your vault is protected</strong>
+
+                        <span>
+                            Your master password never leaves this device.
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Footer -->
+            <div class="login-footer">
+
+                <span>
+                    Protected by client-side encryption
+                </span>
+
+                <span class="footer-dot"></span>
+
+                <span>
+                    VaultX © 2026
+                </span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" defer></script>
+
+    <script src="../js/auth.js"></script>
+
+</body>
+
+</html>
