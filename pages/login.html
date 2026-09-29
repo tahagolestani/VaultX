@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
 
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/login.css">
+
 </head>
 
 <body>
@@ -19,16 +21,23 @@
     <main class="login-page">
 
         <!-- Background -->
+
         <div class="login-background">
+
             <div class="background-glow background-glow-one"></div>
+
             <div class="background-glow background-glow-two"></div>
+
         </div>
 
 
         <!-- Login Container -->
+
         <section class="login-container">
 
+
             <!-- Brand -->
+
             <div class="login-brand">
 
                 <div class="brand-icon">
@@ -43,6 +52,7 @@
 
 
             <!-- Heading -->
+
             <div class="login-heading">
 
                 <h1>
@@ -50,18 +60,35 @@
                 </h1>
 
                 <p>
-                    Enter your master password to unlock your vault.
+                    Enter your username and master password to unlock your vault.
                 </p>
 
             </div>
 
 
             <!-- Login Card -->
+
             <div class="login-card">
 
                 <form id="loginForm">
 
+
+                    <!-- Username -->
+
+                    <div class="form-group">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <input type="text" id="username" placeholder="Enter your username" autocomplete="username"
+                            minlength="3" required>
+
+                    </div>
+
+
                     <!-- Master Password -->
+
                     <div class="form-group">
 
                         <label for="masterPassword" class="vx-label">
@@ -71,7 +98,8 @@
                         <div class="password-input-wrapper">
 
                             <input type="password" id="masterPassword" class="vx-input"
-                                placeholder="Enter your master password" autocomplete="current-password" required>
+                                placeholder="Enter your master password" autocomplete="current-password" minlength="8"
+                                required>
 
                             <button type="button" class="password-toggle" id="passwordToggle"
                                 aria-label="Show password">
@@ -84,6 +112,7 @@
 
 
                     <!-- Remember -->
+
                     <div class="login-options">
 
                         <label class="remember-option">
@@ -98,6 +127,7 @@
 
                         </label>
 
+
                         <button type="button" class="forgot-button" id="forgotButton">
                             Forgot password?
                         </button>
@@ -106,26 +136,36 @@
 
 
                     <!-- Submit -->
+
                     <button type="submit" class="vx-btn vx-btn-primary login-button">
-                        <span>Unlock Vault</span>
+
+                        <span>
+                            Unlock Vault
+                        </span>
 
                         <i class="fa-solid fa-arrow-right"></i>
+
                     </button>
 
                 </form>
 
 
                 <!-- Security Notice -->
+
                 <div class="security-notice">
 
                     <i class="fa-solid fa-shield-halved"></i>
 
                     <div>
-                        <strong>Your vault is protected</strong>
+
+                        <strong>
+                            Your vault is protected
+                        </strong>
 
                         <span>
                             Your master password never leaves this device.
                         </span>
+
                     </div>
 
                 </div>
@@ -134,6 +174,7 @@
 
 
             <!-- Footer -->
+
             <div class="login-footer">
 
                 <span>
@@ -154,6 +195,7 @@
 
 
     <!-- Font Awesome -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" defer></script>
 
     <script src="../js/auth.js"></script>

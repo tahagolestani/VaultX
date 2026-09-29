@@ -4,6 +4,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
+  const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("masterPassword");
   const passwordToggle = document.getElementById("passwordToggle");
   const rememberMe = document.getElementById("rememberMe");
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ---------- Safety Check ---------- */
 
-  if (!loginForm || !passwordInput) {
+  if (!loginForm || !usernameInput || !passwordInput) {
     console.error("VaultX: Login elements not found.");
     return;
   }
@@ -54,13 +55,31 @@ document.addEventListener("DOMContentLoaded", () => {
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
+
+    /* ---------- Username Validation ---------- */
+
+    if (!username) {
+      showLoginMessage("Please enter your username.", "error");
+
+      usernameInput.focus();
+      return;
+    }
+
+    if (username.length < 3) {
+      showLoginMessage("Username must contain at least 3 characters.", "error");
+
+      usernameInput.focus();
+      return;
+    }
+
+    /* ---------- Password Validation ---------- */
 
     if (!password) {
       showLoginMessage("Please enter your master password.", "error");
 
       passwordInput.focus();
-
       return;
     }
 
@@ -71,9 +90,14 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       passwordInput.focus();
-
       return;
     }
+
+    /* ---------- Save Username ---------- */
+
+    localStorage.setItem("vaultx-username", username);
+
+    /* ---------- Unlock Vault ---------- */
 
     unlockVault();
   });
@@ -124,6 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!loginButton) {
       console.error("VaultX: Login button not found.");
+
       return;
     }
 
@@ -141,11 +166,12 @@ document.addEventListener("DOMContentLoaded", () => {
       buttonIcon.className = "fa-solid fa-spinner fa-spin";
     }
 
+    /* ---------- Temporary Session ---------- */
+
     /*
-     * Temporary session.
-     * Real encryption/authentication
-     * will be added later.
-     */
+            Real encryption/authentication
+            will be added later.
+        */
 
     sessionStorage.setItem("vaultx-session", "active");
 

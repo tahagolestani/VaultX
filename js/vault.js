@@ -21,31 +21,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutButton = document.getElementById("logoutButton");
 
   const vaultFilterButton = document.getElementById("vaultFilterButton");
-
   const vaultFilterBar = document.getElementById("vaultFilterBar");
 
   const addPasswordButton = document.getElementById("addPasswordButton");
-
   const vaultAddButton = document.getElementById("vaultAddButton");
 
   const passwordModal = document.getElementById("passwordModal");
 
   const closePasswordModal = document.getElementById("closePasswordModal");
-
   const cancelPasswordButton = document.getElementById("cancelPasswordButton");
 
   const passwordForm = document.getElementById("passwordForm");
 
   const passwordService = document.getElementById("passwordService");
-
   const passwordUsername = document.getElementById("passwordUsername");
-
   const passwordValue = document.getElementById("passwordValue");
-
   const passwordUrl = document.getElementById("passwordUrl");
-
   const passwordCategory = document.getElementById("passwordCategory");
-
   const passwordNotes = document.getElementById("passwordNotes");
 
   const togglePasswordValue = document.getElementById("togglePasswordValue");
@@ -61,21 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   const totalItems = document.getElementById("totalItems");
-
   const totalFavorites = document.getElementById("totalFavorites");
-
   const weakPasswords = document.getElementById("weakPasswords");
-
   const protectedItems = document.getElementById("protectedItems");
 
   const navItemCount = document.getElementById("navItemCount");
-
   const navFavoriteCount = document.getElementById("navFavoriteCount");
 
   const loginCount = document.getElementById("loginCount");
-
   const cardCount = document.getElementById("cardCount");
-
   const secureNoteCount = document.getElementById("secureNoteCount");
 
   const favoritesLink = document.getElementById("favoritesLink");
@@ -83,6 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const improveSecurityButton = document.getElementById(
     "improveSecurityButton",
   );
+
+  /* =========================================
+     USERNAME ELEMENTS
+  ========================================= */
+
+  const profileName = document.getElementById("profileName");
+  const profileAvatar = document.getElementById("profileAvatar");
+  const welcomeUsername = document.getElementById("welcomeUsername");
 
   /* =========================================
      DEFAULT VAULT DATA
@@ -171,6 +165,26 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentSearch = "";
 
   let editingItemId = null;
+
+  /* =========================================
+     USERNAME
+  ========================================= */
+
+  function loadUsername() {
+    const username = localStorage.getItem("vaultx-username") || "User";
+
+    if (profileName) {
+      profileName.textContent = username;
+    }
+
+    if (welcomeUsername) {
+      welcomeUsername.textContent = username;
+    }
+
+    if (profileAvatar) {
+      profileAvatar.textContent = username.charAt(0).toUpperCase();
+    }
+  }
 
   /* =========================================
      HTML ESCAPE
@@ -467,7 +481,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <i class="${escapeHTML(icon.icon)}"></i>
           </div>
 
-
           <div class="password-card-actions">
 
             <button
@@ -486,7 +499,6 @@ document.addEventListener("DOMContentLoaded", () => {
               ></i>
             </button>
 
-
             <button
               type="button"
               class="card-menu-button"
@@ -496,7 +508,6 @@ document.addEventListener("DOMContentLoaded", () => {
             >
               <i class="fa-solid fa-ellipsis"></i>
             </button>
-
 
             <div
               class="card-action-menu"
@@ -513,7 +524,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span>Change Password</span>
               </button>
 
-
               <button
                 type="button"
                 class="delete-item"
@@ -528,7 +538,6 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
         </div>
-
 
         <div class="password-card-content">
 
@@ -547,7 +556,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
 
           </div>
-
 
           <div class="password-card-info">
 
@@ -583,7 +591,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             </div>
 
-
             <div class="password-card-field">
 
               <span class="password-card-label">
@@ -618,7 +625,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
           </div>
 
-
           <div class="password-card-info">
 
             <div class="password-card-field">
@@ -636,7 +642,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
 
           </div>
-
 
           ${
             item.notes
@@ -1663,13 +1668,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!password) {
       if (securityStrengthText) {
         securityStrengthText.textContent = "—";
-
         securityStrengthText.style.color = "#71717a";
       }
 
       if (securityStrengthProgress) {
         securityStrengthProgress.style.width = "0%";
-
         securityStrengthProgress.style.background = "#27272a";
       }
 
@@ -1727,13 +1730,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (securityStrengthText) {
       securityStrengthText.textContent = result.label;
-
       securityStrengthText.style.color = color;
     }
 
     if (securityStrengthProgress) {
       securityStrengthProgress.style.width = `${percentage}%`;
-
       securityStrengthProgress.style.background = color;
     }
 
@@ -1830,6 +1831,8 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================================
      INITIALIZE
   ========================================= */
+
+  loadUsername();
 
   loadVault();
 
