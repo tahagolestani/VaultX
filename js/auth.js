@@ -1,6 +1,6 @@
 /* =========================================
    VaultX — Authentication
-   ========================================= */
+========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
@@ -10,14 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const rememberMe = document.getElementById("rememberMe");
   const forgotButton = document.getElementById("forgotButton");
 
-  /* ---------- Safety Check ---------- */
+  /* =========================================
+       SAFETY CHECK
+    ========================================= */
 
   if (!loginForm || !usernameInput || !passwordInput) {
     console.error("VaultX: Login elements not found.");
+
     return;
   }
 
-  /* ---------- Show / Hide Password ---------- */
+  /* =========================================
+       SHOW / HIDE PASSWORD
+    ========================================= */
 
   if (passwordToggle) {
     passwordToggle.addEventListener("click", () => {
@@ -36,7 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ---------- Remember Me ---------- */
+  /* =========================================
+       REMEMBER ME
+    ========================================= */
 
   if (rememberMe) {
     const savedRemember = localStorage.getItem("vaultx-remember");
@@ -50,20 +57,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ---------- Login ---------- */
+  /* =========================================
+       LOGIN
+    ========================================= */
 
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    /* Get user input */
+
     const username = usernameInput.value.trim();
+
     const password = passwordInput.value.trim();
 
-    /* ---------- Username Validation ---------- */
+    /* =========================================
+           USERNAME VALIDATION
+        ========================================= */
 
     if (!username) {
       showLoginMessage("Please enter your username.", "error");
 
       usernameInput.focus();
+
       return;
     }
 
@@ -71,15 +86,19 @@ document.addEventListener("DOMContentLoaded", () => {
       showLoginMessage("Username must contain at least 3 characters.", "error");
 
       usernameInput.focus();
+
       return;
     }
 
-    /* ---------- Password Validation ---------- */
+    /* =========================================
+           PASSWORD VALIDATION
+        ========================================= */
 
     if (!password) {
       showLoginMessage("Please enter your master password.", "error");
 
       passwordInput.focus();
+
       return;
     }
 
@@ -90,19 +109,26 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       passwordInput.focus();
+
       return;
     }
 
-    /* ---------- Save Username ---------- */
+    /* =========================================
+           SAVE USERNAME
+        ========================================= */
 
     localStorage.setItem("vaultx-username", username);
 
-    /* ---------- Unlock Vault ---------- */
+    /* =========================================
+           UNLOCK VAULT
+        ========================================= */
 
     unlockVault();
   });
 
-  /* ---------- Forgot Password ---------- */
+  /* =========================================
+       FORGOT PASSWORD
+    ========================================= */
 
   if (forgotButton) {
     forgotButton.addEventListener("click", () => {
@@ -113,7 +139,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ---------- Messages ---------- */
+  /* =========================================
+       LOGIN MESSAGE
+    ========================================= */
 
   function showLoginMessage(message, type) {
     removeLoginMessage();
@@ -133,6 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.prepend(messageElement);
   }
 
+  /* =========================================
+       REMOVE LOGIN MESSAGE
+    ========================================= */
+
   function removeLoginMessage() {
     const existingMessage = document.querySelector(".login-message");
 
@@ -141,7 +173,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ---------- Unlock Vault ---------- */
+  /* =========================================
+       UNLOCK VAULT
+    ========================================= */
 
   function unlockVault() {
     const loginButton = loginForm.querySelector(".login-button");
@@ -156,17 +190,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const buttonIcon = loginButton.querySelector("i");
 
+    /* Disable button */
+
     loginButton.disabled = true;
+
+    /* Change button text */
 
     if (buttonText) {
       buttonText.textContent = "Unlocking...";
     }
 
+    /* Change button icon */
+
     if (buttonIcon) {
       buttonIcon.className = "fa-solid fa-spinner fa-spin";
     }
 
-    /* ---------- Temporary Session ---------- */
+    /* =========================================
+           TEMPORARY SESSION
+        ========================================= */
 
     /*
             Real encryption/authentication
@@ -174,6 +216,10 @@ document.addEventListener("DOMContentLoaded", () => {
         */
 
     sessionStorage.setItem("vaultx-session", "active");
+
+    /* =========================================
+           GO TO DASHBOARD
+        ========================================= */
 
     setTimeout(() => {
       window.location.href = "dashboard.html";

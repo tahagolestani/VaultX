@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sidebarOverlay = document.getElementById("sidebarOverlay");
 
   const logoutButton = document.getElementById("logoutButton");
+  const profileLockButton = document.getElementById("profileLockButton");
 
   const vaultFilterButton = document.getElementById("vaultFilterButton");
   const vaultFilterBar = document.getElementById("vaultFilterBar");
@@ -27,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const vaultAddButton = document.getElementById("vaultAddButton");
 
   const passwordModal = document.getElementById("passwordModal");
-
   const closePasswordModal = document.getElementById("closePasswordModal");
   const cancelPasswordButton = document.getElementById("cancelPasswordButton");
 
@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const togglePasswordValue = document.getElementById("togglePasswordValue");
 
   const passwordModalTitle = document.getElementById("passwordModalTitle");
-
   const passwordModalDescription = document.getElementById(
     "passwordModalDescription",
   );
@@ -51,6 +50,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const savePasswordButtonText = document.getElementById(
     "savePasswordButtonText",
   );
+
+  /* =========================================
+     DASHBOARD ELEMENTS
+  ========================================= */
 
   const totalItems = document.getElementById("totalItems");
   const totalFavorites = document.getElementById("totalFavorites");
@@ -71,12 +74,80 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   /* =========================================
-     USERNAME ELEMENTS
+     USERNAME
   ========================================= */
 
   const profileName = document.getElementById("profileName");
   const profileAvatar = document.getElementById("profileAvatar");
   const welcomeUsername = document.getElementById("welcomeUsername");
+
+  /*
+     Username inside profile dropdown
+  */
+
+  const dropdownUsername = document.getElementById("dropdownUsername");
+  const dropdownProfileAvatar = document.getElementById(
+    "dropdownProfileAvatar",
+  );
+
+  /* =========================================
+     PROFILE DROPDOWN
+  ========================================= */
+
+  const profileButton = document.querySelector(".profile-button");
+  const profileDropdown = document.getElementById("profileDropdown");
+
+  /* =========================================
+     PASSWORD SECURITY CENTER
+  ========================================= */
+
+  const securityPassword = document.getElementById("securityPassword");
+
+  const toggleSecurityPassword = document.getElementById(
+    "toggleSecurityPassword",
+  );
+
+  const copySecurityPassword = document.getElementById("copySecurityPassword");
+
+  const securityStrengthText = document.getElementById("securityStrengthText");
+
+  const securityStrengthProgress = document.getElementById(
+    "securityStrengthProgress",
+  );
+
+  const securityResult = document.getElementById("securityResult");
+
+  const securityRequirementLength = document.getElementById(
+    "securityRequirementLength",
+  );
+
+  const securityRequirementUppercase = document.getElementById(
+    "securityRequirementUppercase",
+  );
+
+  const securityRequirementLowercase = document.getElementById(
+    "securityRequirementLowercase",
+  );
+
+  const securityRequirementNumber = document.getElementById(
+    "securityRequirementNumber",
+  );
+
+  const securityRequirementSymbol = document.getElementById(
+    "securityRequirementSymbol",
+  );
+
+  /* =========================================
+     STATE
+  ========================================= */
+
+  let vaultItems = [];
+
+  let currentFilter = "all";
+
+  let currentSearch = "";
+
+  let editingItemId = null;
 
   /* =========================================
      DEFAULT VAULT DATA
@@ -157,21 +228,13 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   /* =========================================
-     STATE
-  ========================================= */
-
-  let vaultItems = [];
-  let currentFilter = "all";
-  let currentSearch = "";
-
-  let editingItemId = null;
-
-  /* =========================================
      USERNAME
   ========================================= */
 
   function loadUsername() {
-    const username = localStorage.getItem("vaultx-username") || "User";
+    const username = localStorage.getItem("vaultx-username")?.trim() || "User";
+
+    const firstLetter = username.charAt(0).toUpperCase();
 
     if (profileName) {
       profileName.textContent = username;
@@ -182,7 +245,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (profileAvatar) {
-      profileAvatar.textContent = username.charAt(0).toUpperCase();
+      profileAvatar.textContent = firstLetter;
+    }
+
+    if (dropdownUsername) {
+      dropdownUsername.textContent = username;
+    }
+
+    if (dropdownProfileAvatar) {
+      dropdownProfileAvatar.textContent = firstLetter;
     }
   }
 
@@ -211,19 +282,25 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const savedItems = localStorage.getItem(STORAGE_KEY);
 
-      if (savedItems) {
-        const parsedItems = JSON.parse(savedItems);
-
-        if (Array.isArray(parsedItems)) {
-          vaultItems = parsedItems;
-        } else {
-          vaultItems = [...defaultItems];
-          saveVault();
-        }
-      } else {
+      if (!savedItems) {
         vaultItems = [...defaultItems];
+
         saveVault();
+
+        return;
       }
+
+      const parsedItems = JSON.parse(savedItems);
+
+      if (!Array.isArray(parsedItems)) {
+        vaultItems = [...defaultItems];
+
+        saveVault();
+
+        return;
+      }
+
+      vaultItems = parsedItems;
     } catch (error) {
       console.error("VaultX: Failed to load vault.", error);
 
@@ -464,7 +541,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createPasswordCard(item) {
     const icon = getItemIcon(item);
+
     const domain = getDomain(item.url);
+
     const categoryLabel = getCategoryLabel(item.category);
 
     return `
@@ -634,9 +713,11 @@ document.addEventListener("DOMContentLoaded", () => {
               </span>
 
               <div class="password-card-category">
+
                 <span class="category-dot"></span>
 
                 ${escapeHTML(categoryLabel)}
+
               </div>
 
             </div>
@@ -647,11 +728,13 @@ document.addEventListener("DOMContentLoaded", () => {
             item.notes
               ? `
                 <div class="password-card-notes">
+
                   <i class="fa-regular fa-note-sticky"></i>
 
                   <span>
                     ${escapeHTML(item.notes)}
                   </span>
+
                 </div>
               `
               : ""
@@ -671,8 +754,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!passwordGrid) {
       return;
     }
-
-    /* COPY */
 
     const copyButtons = passwordGrid.querySelectorAll(".copy-button");
 
@@ -706,8 +787,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    /* FAVORITE */
-
     const favoriteButtons = passwordGrid.querySelectorAll(".favorite-button");
 
     favoriteButtons.forEach((button) => {
@@ -719,8 +798,6 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleFavorite(itemId);
       });
     });
-
-    /* THREE DOT MENU */
 
     const menuButtons = passwordGrid.querySelectorAll(".card-menu-button");
 
@@ -734,9 +811,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    /* EDIT */
-
-    const editButtons = passwordGrid.querySelectorAll("[data-edit-id]");
+    const editButtons = passwordGrid.querySelectorAll(".edit-item");
 
     editButtons.forEach((button) => {
       button.addEventListener("click", (event) => {
@@ -750,9 +825,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    /* DELETE */
-
-    const deleteButtons = passwordGrid.querySelectorAll("[data-delete-id]");
+    const deleteButtons = passwordGrid.querySelectorAll(".delete-item");
 
     deleteButtons.forEach((button) => {
       button.addEventListener("click", (event) => {
@@ -772,6 +845,10 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================================= */
 
   function toggleCardMenu(itemId) {
+    if (!passwordGrid) {
+      return;
+    }
+
     const targetMenu = passwordGrid.querySelector(
       `[data-action-menu="${CSS.escape(itemId)}"]`,
     );
@@ -780,11 +857,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const isOpen = !targetMenu.hidden;
+    const wasOpen = !targetMenu.hidden;
 
     closeAllCardMenus();
 
-    if (!isOpen) {
+    if (!wasOpen) {
       targetMenu.hidden = false;
     }
   }
@@ -817,6 +894,7 @@ document.addEventListener("DOMContentLoaded", () => {
     saveVault();
 
     renderVault();
+
     updateDashboardStats();
   }
 
@@ -842,6 +920,7 @@ document.addEventListener("DOMContentLoaded", () => {
     saveVault();
 
     renderVault();
+
     updateDashboardStats();
   }
 
@@ -860,7 +939,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (currentSearch) {
+    if (currentSearch.trim()) {
       emptySearch.innerHTML = `
         <div class="empty-search-icon">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -1036,11 +1115,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (vaultFilterButton && vaultFilterBar) {
     vaultFilterButton.addEventListener("click", () => {
-      vaultFilterBar.classList.toggle("active");
+      const isActive = vaultFilterBar.classList.toggle("active");
 
-      const isVisible = vaultFilterBar.classList.contains("active");
-
-      vaultFilterBar.hidden = !isVisible;
+      vaultFilterBar.hidden = !isActive;
     });
   }
 
@@ -1055,10 +1132,11 @@ document.addEventListener("DOMContentLoaded", () => {
       currentFilter = button.dataset.filter || "all";
 
       filterButtons.forEach((filterButton) => {
-        filterButton.classList.remove("active");
+        filterButton.classList.toggle(
+          "active",
+          filterButton.dataset.filter === currentFilter,
+        );
       });
-
-      button.classList.add("active");
 
       renderVault();
     });
@@ -1090,6 +1168,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       renderVault();
+
       closeSidebar();
 
       const vaultSection = document.getElementById("vault");
@@ -1121,6 +1200,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       renderVault();
+
       closeSidebar();
 
       const vaultSection = document.getElementById("vault");
@@ -1175,18 +1255,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================================
-     OPEN ADD MODAL
+     RESET PASSWORD FORM
   ========================================= */
 
-  function openPasswordModal() {
-    if (!passwordModal) {
-      return;
-    }
-
-    editingItemId = null;
-
-    setModalMode("add");
-
+  function resetPasswordForm() {
     if (passwordForm) {
       passwordForm.reset();
     }
@@ -1200,6 +1272,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       togglePasswordValue.setAttribute("aria-label", "Show password");
     }
+  }
+
+  /* =========================================
+     OPEN ADD MODAL
+  ========================================= */
+
+  function openPasswordModal() {
+    if (!passwordModal) {
+      return;
+    }
+
+    editingItemId = null;
+
+    setModalMode("add");
+
+    resetPasswordForm();
 
     passwordModal.hidden = false;
 
@@ -1291,19 +1379,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     editingItemId = null;
 
-    if (passwordForm) {
-      passwordForm.reset();
-    }
-
-    if (passwordValue) {
-      passwordValue.type = "password";
-    }
-
-    if (togglePasswordValue) {
-      togglePasswordValue.innerHTML = '<i class="fa-regular fa-eye"></i>';
-
-      togglePasswordValue.setAttribute("aria-label", "Show password");
-    }
+    resetPasswordForm();
 
     setModalMode("add");
   }
@@ -1381,23 +1457,37 @@ document.addEventListener("DOMContentLoaded", () => {
     passwordForm.addEventListener("submit", (event) => {
       event.preventDefault();
 
-      const service = passwordService ? passwordService.value.trim() : "";
+      const service = passwordService?.value.trim() || "";
 
-      const username = passwordUsername ? passwordUsername.value.trim() : "";
+      const username = passwordUsername?.value.trim() || "";
 
-      const password = passwordValue ? passwordValue.value : "";
+      const password = passwordValue?.value || "";
 
-      const url = passwordUrl ? passwordUrl.value.trim() : "";
+      const url = passwordUrl?.value.trim() || "";
 
-      const category = passwordCategory ? passwordCategory.value : "login";
+      const category = passwordCategory?.value || "login";
 
-      const notes = passwordNotes ? passwordNotes.value.trim() : "";
+      const notes = passwordNotes?.value.trim() || "";
 
-      if (!service || !username || !password) {
+      if (!service) {
+        passwordService?.focus();
+
         return;
       }
 
-      /* EDIT EXISTING */
+      if (!username) {
+        passwordUsername?.focus();
+
+        return;
+      }
+
+      if (!password) {
+        passwordValue?.focus();
+
+        return;
+      }
+
+      /* EDIT */
 
       if (editingItemId) {
         const item = vaultItems.find(
@@ -1409,15 +1499,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         item.name = service;
+
         item.username = username;
+
         item.password = password;
+
         item.url = url;
+
         item.category = category;
+
         item.notes = notes;
 
         saveVault();
 
         renderVault();
+
         updateDashboardStats();
 
         closePasswordModalFunction();
@@ -1425,18 +1521,25 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      /* ADD NEW */
+      /* CREATE */
 
       const newItem = {
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
 
         name: service,
+
         username,
+
         password,
+
         url,
+
         category,
+
         notes,
+
         favorite: false,
+
         createdAt: Date.now(),
       };
 
@@ -1445,6 +1548,7 @@ document.addEventListener("DOMContentLoaded", () => {
       saveVault();
 
       currentFilter = "all";
+
       currentSearch = "";
 
       if (searchInput) {
@@ -1456,6 +1560,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       renderVault();
+
       updateDashboardStats();
 
       closePasswordModalFunction();
@@ -1527,17 +1632,40 @@ document.addEventListener("DOMContentLoaded", () => {
      LOCK VAULT
   ========================================= */
 
-  if (logoutButton) {
-    logoutButton.addEventListener("click", () => {
-      sessionStorage.removeItem("vaultx-session");
+  function lockVault() {
+    sessionStorage.removeItem("vaultx-session");
 
-      window.location.href = "login.html";
+    window.location.href = "login.html";
+  }
+
+  if (logoutButton) {
+    logoutButton.addEventListener("click", lockVault);
+  }
+
+  if (profileLockButton) {
+    profileLockButton.addEventListener("click", lockVault);
+  }
+
+  /* =========================================
+     PROFILE DROPDOWN
+  ========================================= */
+
+  if (profileButton && profileDropdown) {
+    profileButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      const isActive = profileDropdown.classList.toggle("active");
+
+      profileButton.classList.toggle("active", isActive);
+    });
+
+    profileDropdown.addEventListener("click", (event) => {
+      event.stopPropagation();
     });
   }
 
   /* =========================================
-     QUICK SEARCH
-     Press "/" to focus search
+     QUICK SEARCH + GLOBAL ESCAPE
   ========================================= */
 
   document.addEventListener("keydown", (event) => {
@@ -1559,7 +1687,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (event.key === "Escape") {
       closeAllCardMenus();
+
       closeSidebar();
+
+      if (profileDropdown && profileButton) {
+        profileDropdown.classList.remove("active");
+
+        profileButton.classList.remove("active");
+      }
 
       if (
         passwordModal &&
@@ -1571,61 +1706,28 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================================
-     CLOSE CARD MENU WHEN CLICKING OUTSIDE
+     CLOSE MENUS WHEN CLICKING OUTSIDE
   ========================================= */
 
   document.addEventListener("click", (event) => {
     if (!event.target.closest(".password-card-actions")) {
       closeAllCardMenus();
     }
+
+    if (
+      profileDropdown &&
+      profileButton &&
+      !profileDropdown.contains(event.target) &&
+      !profileButton.contains(event.target)
+    ) {
+      profileDropdown.classList.remove("active");
+
+      profileButton.classList.remove("active");
+    }
   });
 
   /* =========================================
-     PASSWORD SECURITY CENTER
-  ========================================= */
-
-  const securityPassword = document.getElementById("securityPassword");
-
-  const toggleSecurityPassword = document.getElementById(
-    "toggleSecurityPassword",
-  );
-
-  const copySecurityPassword = document.getElementById("copySecurityPassword");
-
-  const securityStrengthText = document.getElementById("securityStrengthText");
-
-  const securityStrengthProgress = document.getElementById(
-    "securityStrengthProgress",
-  );
-
-  const securityResult = document.getElementById("securityResult");
-
-  /* =========================================
-     REQUIREMENTS
-  ========================================= */
-
-  const securityRequirementLength = document.getElementById(
-    "securityRequirementLength",
-  );
-
-  const securityRequirementUppercase = document.getElementById(
-    "securityRequirementUppercase",
-  );
-
-  const securityRequirementLowercase = document.getElementById(
-    "securityRequirementLowercase",
-  );
-
-  const securityRequirementNumber = document.getElementById(
-    "securityRequirementNumber",
-  );
-
-  const securityRequirementSymbol = document.getElementById(
-    "securityRequirementSymbol",
-  );
-
-  /* =========================================
-     REQUIREMENT UPDATE
+     SECURITY REQUIREMENT UPDATE
   ========================================= */
 
   function updateSecurityRequirement(element, valid) {
@@ -1668,11 +1770,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!password) {
       if (securityStrengthText) {
         securityStrengthText.textContent = "—";
+
         securityStrengthText.style.color = "#71717a";
       }
 
       if (securityStrengthProgress) {
         securityStrengthProgress.style.width = "0%";
+
         securityStrengthProgress.style.background = "#27272a";
       }
 
@@ -1716,25 +1820,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const result = calculatePasswordStrength(password);
 
     let percentage = 30;
+
     let color = "#ef4444";
 
     if (result.label === "Medium") {
       percentage = 65;
+
       color = "#f59e0b";
     }
 
     if (result.label === "Strong") {
       percentage = 100;
+
       color = "#22c55e";
     }
 
     if (securityStrengthText) {
       securityStrengthText.textContent = result.label;
+
       securityStrengthText.style.color = color;
     }
 
     if (securityStrengthProgress) {
       securityStrengthProgress.style.width = `${percentage}%`;
+
       securityStrengthProgress.style.background = color;
     }
 
@@ -1758,6 +1867,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (securityPassword) {
     securityPassword.disabled = false;
+
     securityPassword.readOnly = false;
 
     securityPassword.addEventListener("input", checkSecurityPassword);

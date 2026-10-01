@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -18,7 +17,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" defer>
+    </script>
 
 </head>
 
@@ -46,7 +46,9 @@
             </a>
 
             <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">
+
                 <i class="fa-solid fa-xmark"></i>
+
             </button>
 
         </div>
@@ -235,7 +237,8 @@
     </aside>
 
 
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="sidebar-overlay" id="sidebarOverlay">
+    </div>
 
 
     <!-- =========================================
@@ -253,13 +256,13 @@
             <div class="header-left">
 
                 <button type="button" class="mobile-menu-button" id="mobileMenuButton" aria-label="Open menu">
+
                     <i class="fa-solid fa-bars"></i>
+
                 </button>
 
 
                 <div class="search-wrapper">
-
-                    <i class="fa-solid fa-magnifying-glass"></i>
 
                     <input type="search" id="vaultSearch" placeholder="Search your vault..." autocomplete="off">
 
@@ -277,7 +280,9 @@
             <div class="header-actions">
 
                 <button type="button" class="header-icon-button" title="Notifications" aria-label="Notifications">
+
                     <i class="fa-regular fa-bell"></i>
+
                 </button>
 
 
@@ -286,16 +291,85 @@
                 <button type="button" class="profile-button">
 
                     <span class="profile-avatar" id="profileAvatar">
-                        T
+                        U
                     </span>
 
                     <span class="profile-name" id="profileName">
-                        Taha
+                        User
                     </span>
 
                     <i class="fa-solid fa-chevron-down"></i>
 
                 </button>
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div class="profile-dropdown" id="profileDropdown">
+
+
+                    <div class="profile-dropdown-header">
+
+
+                        <span class="profile-dropdown-avatar" id="dropdownProfileAvatar">
+                            U
+                        </span>
+
+
+                        <div>
+
+                            <strong id="dropdownUsername">
+                                User
+                            </strong>
+
+                            <span>
+                                Personal Vault
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-dropdown-divider"></div>
+
+
+                    <button type="button" class="profile-dropdown-item">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <span>
+                            Account
+                        </span>
+
+                    </button>
+
+
+                    <button type="button" class="profile-dropdown-item">
+
+                        <i class="fa-solid fa-gear"></i>
+
+                        <span>
+                            Settings
+                        </span>
+
+                    </button>
+
+
+                    <div class="profile-dropdown-divider"></div>
+
+
+                    <button type="button" class="profile-dropdown-item profile-lock-item" id="profileLockButton">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <span>
+                            Lock Vault
+                        </span>
+
+                    </button>
+
+                </div>
 
             </div>
 
@@ -318,10 +392,13 @@
                     </span>
 
                     <h1>
+
                         Welcome back,
+
                         <span id="welcomeUsername">
-                            Taha
+                            User
                         </span>
+
                     </h1>
 
                     <p>
@@ -349,7 +426,9 @@
                 <div class="security-overview-content">
 
                     <div class="security-overview-icon">
+
                         <i class="fa-solid fa-shield-halved"></i>
+
                     </div>
 
                     <div class="security-overview-text">
@@ -394,7 +473,8 @@
 
                         <div class="security-progress">
 
-                            <span id="securityProgress" style="width: 100%"></span>
+                            <span id="securityProgress" style="width: 100%">
+                            </span>
 
                         </div>
 
@@ -561,19 +641,27 @@
                 <div class="vault-filter-bar" id="vaultFilterBar" hidden>
 
                     <button type="button" class="filter-chip active" data-filter="all">
+
                         All
+
                     </button>
 
                     <button type="button" class="filter-chip" data-filter="login">
+
                         Logins
+
                     </button>
 
                     <button type="button" class="filter-chip" data-filter="card">
+
                         Cards
+
                     </button>
 
                     <button type="button" class="filter-chip" data-filter="secure-note">
+
                         Secure Notes
+
                     </button>
 
                     <button type="button" class="filter-chip" data-filter="favorite">
@@ -589,12 +677,14 @@
 
                 <!-- PASSWORD GRID -->
 
-                <div class="password-grid" id="passwordGrid"></div>
+                <div class="password-grid" id="passwordGrid">
+                </div>
 
 
                 <!-- EMPTY STATE -->
 
-                <div class="empty-search" id="emptySearch" hidden></div>
+                <div class="empty-search" id="emptySearch" hidden>
+                </div>
 
             </section>
 
@@ -653,6 +743,7 @@
                             <input type="password" id="securityPassword" class="security-password-input"
                                 placeholder="Enter a password..." autocomplete="off">
 
+
                             <div class="security-input-actions">
 
                                 <button type="button" class="security-action-button" id="toggleSecurityPassword"
@@ -692,7 +783,8 @@
 
                             <div class="security-strength-track">
 
-                                <span id="securityStrengthProgress" style="width: 0%"></span>
+                                <span id="securityStrengthProgress" style="width: 0%">
+                                </span>
 
                             </div>
 
@@ -700,7 +792,9 @@
 
 
                         <p class="security-result" id="securityResult">
+
                             Enter a password to check its strength.
+
                         </p>
 
                     </div>
@@ -988,7 +1082,9 @@
                 <div class="modal-actions">
 
                     <button type="button" class="vx-btn vx-btn-secondary" id="cancelPasswordButton">
+
                         Cancel
+
                     </button>
 
 
